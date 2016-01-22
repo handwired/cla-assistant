@@ -67,6 +67,26 @@ module.controller( 'ClaController', ['$window', '$scope', '$stateParams', '$RAW'
 						$window.location.href = acceptUrl;
 				};
 
+                $scope.submit = function() {
+                    $http({
+                        method: 'POST',
+                        url: '/profile',
+                        data: {
+                            id: $scope.user.value.id || null,
+                            name: $scope.user.value.name,
+                            address: $scope.user.value.address,
+                            email: $scope.user.value.email
+                        },
+                    }).then(
+                        function successCallback(response) {
+                            $scope.agree();
+                        },
+                        function errorCallback(response) {
+                            console.error('An error occurred.');
+                        }
+                    );
+                };
+
 				var userPromise = getUser();
 
 				var repoPromise = checkRepo(function(exists){

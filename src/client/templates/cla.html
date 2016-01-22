@@ -7,9 +7,16 @@
 				<div class="cla-box well">
 					<div ng-bind-html="cla"></div>
 				</div>
-				<p class="text-center">
-					<button class="btn btn-info" ng-show="!signed && repoExists && claText" ng-click="agree()" style="width:100%; height:45px;">Sign in with GitHub to agree</button>
-				</p>
+                <div ng-show="!signed && repoExists && claText">
+                    <p class="text-center">
+                        <form ng-submit="submit()">
+                            <label for="name">Full Name:</label><input id="name" type="text" ng-model="user.value.name" required class="form-control" /><br/>
+                            <label for="address">Address:</label><input id="address" type="text" ng-model="user.value.address" required class="form-control" /><br/>
+                            <label for="email">E-mail:</label><input id="email" type="email" ng-model="user.value.email" required class="form-control" /><br/>
+                            <input type="submit" id="submit" class="btn btn-info" style="width:100%; height:45px;" value="Sign in with GitHub to agree" />
+                        </form>
+                    </p>
+                </div>
 			</div>
 		</div>
 
