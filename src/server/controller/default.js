@@ -28,6 +28,18 @@ router.use('/accept/:owner/:repo', function(req, res) {
     }
 });
 
+router.use('/:owner/:repo', function(req, res, next) {
+    // Make sure the user has authenticated before signing the CLA. That
+    // way, we have a user login to associate the additional form fields
+    // with.
+    if (!req.user) {
+        req.session.next = req.originalUrl;
+        return res.redirect('/auth/github');
+    } else {
+        next();
+    }
+});
+
 router.all('/static/*', function(req, res) {
 	var filePath;
 	if (req.user && req.path === '/static/cla-assistant.json') {
